@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+<div class="well bs-component">
+        <legend>Регистрация</legend>
+
+        <form class="form-horizontal" action="{% url 'registration' %}" method="POST">
+            <fieldset>
+                {% csrf_token %}
+                {% for field in form %}
+                    <div class="form-group">
+                        <label for="inputEmail" class="col-lg-2 control-label">{{ field.label }}</label>
+                        <div class="col-lg-10">
+                            <input type="text" class="form-control"
+                                   name={{ field.name }} placeholder="{{ field.name }}">
+                        </div>
+                        {% if field.errors %}
+                            {% for error in field.errors %}
+                                <div class="col-lg-10 col-lg-offset-2">
+                                    <span class="text-danger ">{{ error }}</span>
+                                </div>
+                            {% endfor %}
+                        {% endif %}
+                    </div>
+                {% endfor %}
+
+                <div class="form-group">
+                    {% if form.errors %}
+                        <div class="col-lg-10 col-lg-offset-2">
+                            {% for error in form.non_field_errors %}
+                                <p class="text-danger">{{ error }}</p>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                    <div class="col-lg-10 col-lg-offset-2">
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </div>
+                </div>
+            </fieldset>
+        </form>
+    </div>
+{% endblock %}

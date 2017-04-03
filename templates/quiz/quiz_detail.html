@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="bs-component well">
+        <legend>{{ quiz.name }}</legend>
+
+{#        <br>#}
+        <span>Текущий прогресс: <b> {{ stats.answered }} / {{ stats.question_count }}</b></span>
+
+        <div class="progress">
+            <div class="progress-bar" style="width: {{ stats.completed_percent }}%;"></div>
+        </div>
+        <div id="source-button" class="btn btn-primary btn-xs" style="display: none;">&lt; &gt;</div>
+
+        <hr>
+        {% if stats.answered == 0 %}
+            <a href="{% url 'next_question' quiz_pk=quiz.id %}">Начать тестирование</a>
+        {% elif stats.answered != stats.question_count %}
+            <a href="{% url 'next_question' quiz_pk=quiz.id %}">Продолжить тестирование</a>
+        {% else %}
+            <h5>Ваш результат :</h5>
+            <p>Правильных ответов : {{ stats.answered_right }} / {{ stats.question_count }}</p>
+            <p>Процент правильных ответов: {{ stats.right_percent }}%</p>
+        {% endif %}
+    </div>
+    <div class="container">
+    <a href="{% url 'index' %}">Назад к списку тестов</a>
+    </div>
+
+{% endblock %}
