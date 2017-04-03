@@ -49,6 +49,9 @@ class Question(models.Model):
         verbose_name_plural = 'Вопросы'
         ordering = ('order',)
 
+    def __str__(self):
+        return self.title
+
     def get_absolute_url(self):
         return reverse('question_detail', args=[self.quiz_id, self.id])
 

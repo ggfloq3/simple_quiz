@@ -1,7 +1,7 @@
 from django.contrib import admin
 
 # Register your models here.
-from quiz.models import Quiz, Question, AnswerVariant
+from quiz.models import Quiz, Question, AnswerVariant, UserAnswer
 from nested_inline.admin import NestedStackedInline, NestedModelAdmin, NestedTabularInline
 
 
@@ -20,7 +20,13 @@ class QuizAdmin(NestedModelAdmin):
     inlines = [QuestionInline, ]
 
 
+class UserAnswerAdmin(admin.ModelAdmin):
+    list_filter = ('user',)
+    list_display = ('id', 'user', 'question', 'is_right')
+
+
 admin.site.register(Quiz, QuizAdmin)
+admin.site.register(UserAnswer, UserAnswerAdmin)
 
 
 #
