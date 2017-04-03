@@ -38,6 +38,7 @@ class QuestionView(FormView):
 
     """
     form_class = QuestionForm
+    template_name = 'quiz/question.html'
 
     def dispatch(self, request, *args, **kwargs):
         try:
@@ -46,7 +47,6 @@ class QuestionView(FormView):
             raise Http404("Quiz does not exist")
 
         self.question = quiz.next_question_for_user(self.request.user)
-
         if not self.question:
             return redirect('quiz_detail', self.kwargs['quiz_pk'])
         return super(QuestionView, self).dispatch(request, *args, **kwargs)
@@ -73,8 +73,6 @@ class QuestionView(FormView):
 
     def get_success_url(self):
         return reverse('next_question', kwargs={'quiz_pk': self.kwargs['quiz_pk']})
-
-    template_name = 'quiz/question.html'
 
 
 def register(request):
